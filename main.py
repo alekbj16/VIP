@@ -1,6 +1,8 @@
 ### Initial work on assignment 4
 import os 
 import cv2
+import numpy as np
+from sklearn.cluster import KMeans
 
 
 def retreive_imgs(n_categories):
@@ -35,4 +37,30 @@ def retreive_imgs(n_categories):
     return categories, images, f_names
 
 if __name__ == "__main__":
-    retreive_imgs(1)
+    cats, imgs, f_names = retreive_imgs(5)
+    sift = cv2.SIFT_create()
+
+    train = []
+    test = []
+    train_des = []
+    test_des = []
+    for i in range(len(imgs[1])//2):
+        kp, des = sift.detectAndCompute(imgs[1][i], None)
+        train_des.append(des)
+        for d in des:
+            train.append(d)
+    for i in range(len(imgs[1])//2, len(imgs[1])):
+        kp, des = sift.detectAndCompute(imgs[1][i], None)
+        for d in des:
+            test.append(d)
+
+    train = np.array(train)
+    test = np.array(test)
+    kmeans = KMeans(n_clusters=200, random_state=0)
+    kmeans.fit(train)
+
+    train_pred = []
+    for des in train_des:
+        pred = kmeans.predict(des)
+        train_pred.append(pred)
+    
