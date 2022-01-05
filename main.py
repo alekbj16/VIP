@@ -11,18 +11,19 @@ def retreive_imgs(n_categories):
     """
     categories = []
     images = []
-    f_names = []
+    file_names = []
 
     cwd = os.getcwd()
-    path_to_categories = cwd + "\\101_ObjectCategories" #Path to all categories
+    path_to_categories = os.path.join(cwd,"101_ObjectCategories") #Path to all categories
+    print(path_to_categories)
     list_of_categories = os.listdir(path_to_categories)
     for i in range(n_categories):
-        path_to_category = path_to_categories + "\\" + str(list_of_categories[i]) #Path to a specific category
+        path_to_category = os.path.join(path_to_categories,list_of_categories[i])
         images_in_category = os.listdir(path_to_category)
         categories.append(str(list_of_categories[i]))
         for img in images_in_category:
-            img_path = str(path_to_category + "\\" + img)
-            print(img_path)
+            img_path = os.path.join(path_to_category,img)
+            print(f"img_path{img_path}")
             img = cv2.imread(img_path)
             grayscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             cv2.imshow("image",grayscale)
