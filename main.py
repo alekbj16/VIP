@@ -28,8 +28,8 @@ def retreive_imgs(n_categories):
         categories.append(str(list_of_categories[i]))
         for img in images_in_category:
             img_path = os.path.join(path_to_category,img)
-            img = cv2.imread(img_path)
-            grayscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img_data = cv2.imread(img_path)
+            grayscale = cv2.cvtColor(img_data, cv2.COLOR_BGR2GRAY)
             img_in_cat.append(grayscale)
             f_names_cat.append(img)
         images.append(img_in_cat)
@@ -38,10 +38,8 @@ def retreive_imgs(n_categories):
     return categories, images, f_names
 
 if __name__ == "__main__":
+    n_clusters = 5
     cats, imgs, f_names = retreive_imgs(2)
-    #  imgs = [imgs[1]]
-    #  cats = [cats[1]]
-    #  f_names = [f_names[1]]
     sift = cv2.SIFT_create()
 
     train = [] # The individual descriptors for each image, will result in: [descriptors]
@@ -69,7 +67,7 @@ if __name__ == "__main__":
     print("Running kmeans")
     train = np.array(train)
     test = np.array(test)
-    kmeans = KMeans(n_clusters=5, random_state=0, max_iter=10)
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0, max_iter=10)
     kmeans.fit(train)
 
     print("Computing word histograms for training")
@@ -78,7 +76,7 @@ if __name__ == "__main__":
     for cat in range(len(cats)):
         cluster_histo_train.append([])
         for img in range(len(train_des[cat])):
-            cluster_histo_train[cat].append([0]*200)
+            cluster_histo_train[cat].append([0]*n_clusters)
 
     # Computing the word histograms
     for cat in range(len(cats)):
@@ -93,7 +91,7 @@ if __name__ == "__main__":
     for cat in range(len(cats)):
         cluster_histo_test.append([])
         for img in range(len(test_des[cat])):
-            cluster_histo_test[cat].append([0]*200)
+            cluster_histo_test[cat].append([0]*n_clusters)
 
     # Computing the word histograms for testing
     for cat in range(len(cats)):
@@ -106,8 +104,7 @@ if __name__ == "__main__":
     data = []
     for cat in range(len(cats)):
         for img in range(len(train_des[cat])):
-            for cluster in cluster_histo_train:
-                data.append((cats[cat], f_names[cat][img], cluster))
+            data.append((cats[cat], f_names[cat][img], cluster_histo_train[cat][img]))
 
     joblib.dump(data, "train.txt")
     lul = joblib.load("train.txt")
