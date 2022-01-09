@@ -100,12 +100,17 @@ if __name__ == "__main__":
             for cluster in preds:
                 cluster_histo_test[cat][img][cluster] += 1
 
+    print("Saving data")
     # Saving the data
-    data = []
+    data_train = []
     for cat in range(len(cats)):
         for img in range(len(train_des[cat])):
             data.append((cats[cat], f_names[cat][img], cluster_histo_train[cat][img]))
 
-    joblib.dump(data, "train.txt")
-    lul = joblib.load("train.txt")
-    print(lul[0])
+    data_test = []
+    for cat in range(len(cats)):
+        for img in range(len(test_des[cat])):
+            data.append((cats[cat], f_names[cat][img], cluster_histo_test[cat][img]))
+
+    joblib.dump(data_train, "train.txt")
+    joblib.dump(data_test, "test.txt")
