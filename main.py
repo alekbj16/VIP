@@ -38,8 +38,8 @@ def retreive_imgs(n_categories):
     return categories, images, f_names
 
 if __name__ == "__main__":
-    n_clusters = 5
-    cats, imgs, f_names = retreive_imgs(2)
+    n_clusters = 200
+    cats, imgs, f_names = retreive_imgs(5)
     sift = cv2.SIFT_create()
 
     train = [] # The individual descriptors for each image, will result in: [descriptors]
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     print("Running kmeans")
     train = np.array(train)
     test = np.array(test)
-    kmeans = KMeans(n_clusters=n_clusters, random_state=0, max_iter=10)
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0, max_iter=300)
     kmeans.fit(train)
 
     print("Computing word histograms for training")
@@ -105,12 +105,12 @@ if __name__ == "__main__":
     data_train = []
     for cat in range(len(cats)):
         for img in range(len(train_des[cat])):
-            data.append((cats[cat], f_names[cat][img], cluster_histo_train[cat][img]))
+            data_train.append((cats[cat], f_names[cat][img], cluster_histo_train[cat][img]))
 
     data_test = []
     for cat in range(len(cats)):
         for img in range(len(test_des[cat])):
-            data.append((cats[cat], f_names[cat][img], cluster_histo_test[cat][img]))
+            data_test.append((cats[cat], f_names[cat][img], cluster_histo_test[cat][img]))
 
     joblib.dump(data_train, "train.txt")
     joblib.dump(data_test, "test.txt")
