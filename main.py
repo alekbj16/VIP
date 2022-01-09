@@ -39,7 +39,7 @@ def retreive_imgs(n_categories):
 
 if __name__ == "__main__":
     n_clusters = 200
-    cats, imgs, f_names = retreive_imgs(5)
+    cats, imgs, f_names = retreive_imgs(20)
     sift = cv2.SIFT_create()
 
     train = [] # The individual descriptors for each image, will result in: [descriptors]
