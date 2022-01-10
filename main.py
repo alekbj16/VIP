@@ -38,9 +38,11 @@ def retreive_imgs(n_categories):
     return categories, images, f_names
 
 if __name__ == "__main__":
-    n_clusters = 200
+    n_clusters = 100
     cats, imgs, f_names = retreive_imgs(20)
     sift = cv2.SIFT_create()
+
+    print(f"Running with {n_clusters} clusters")
 
     train = [] # The individual descriptors for each image, will result in: [descriptors]
     test = []  # Same as above but for testing
@@ -112,5 +114,5 @@ if __name__ == "__main__":
         for img in range(len(test_des[cat])):
             data_test.append((cats[cat], f_names[cat][img], cluster_histo_test[cat][img]))
 
-    joblib.dump(data_train, "train.txt")
-    joblib.dump(data_test, "test.txt")
+    joblib.dump(data_train, "train_"+str(n_clusters)+".txt")
+    joblib.dump(data_test, "test_"+str(n_clusters)+".txt")
