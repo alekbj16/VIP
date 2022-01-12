@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "binocular";    ls ./101_ObjectCategories/binocular | wc -l
+echo "joshua_tree "; ls ./101_ObjectCategories/joshua_tree | wc -l
+echo "snoopy";       ls ./101_ObjectCategories/snoopy | wc -l
+echo "brontosaurus"; ls ./101_ObjectCategories/brontosaurus | wc -l
+echo "stapler";      ls ./101_ObjectCategories/stapler | wc -l
+echo "lobster";      ls ./101_ObjectCategories/lobster | wc -l
+echo "watch";        ls ./101_ObjectCategories/watch | wc -l
+echo "flamingo";     ls ./101_ObjectCategories/flamingo | wc -l
+echo "sunflower";    ls ./101_ObjectCategories/sunflower | wc -l
+echo "headphone";    ls ./101_ObjectCategories/headphone | wc -l
+echo "airplanes";    ls ./101_ObjectCategories/airplanes | wc -l
+echo "pigeon";       ls ./101_ObjectCategories/pigeon | wc -l
+echo "bonsai";       ls ./101_ObjectCategories/bonsai | wc -l
+echo "starfish";     ls ./101_ObjectCategories/starfish | wc -l
+echo "laptop";       ls ./101_ObjectCategories/laptop | wc -l
+echo "inline_skate"; ls ./101_ObjectCategories/inline_skate | wc -l
+echo "saxophone";    ls ./101_ObjectCategories/saxophone | wc -l
+echo "nautilus";     ls ./101_ObjectCategories/nautilus | wc -l
+echo "bass";         ls ./101_ObjectCategories/bass | wc -l
+echo "Faces";        ls ./101_ObjectCategories/Faces | wc -l
