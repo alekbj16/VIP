@@ -1,10 +1,11 @@
 from email.mime import image
+from multiprocessing import set_forkserver_preload
 from sklearn.cluster import KMeans
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-k = 2
+k = 5
 image_path = "./Images_Data/coins.png"
 
 img_data = cv2.imread(image_path,0)
@@ -28,4 +29,5 @@ for i in range(segmented.shape[0]):
 segmented = segmented.reshape(img_data.shape)
 print(segmented)
 
-plt.imshow(segmented)
+cv2.imwrite("bob.png", segmented)
+#plt.imshow(segmented)
