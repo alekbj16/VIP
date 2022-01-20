@@ -5,16 +5,15 @@ from otsu import otsu
 
 
 if __name__ == "__main__":
-    # names = ["camera","Checkerboard", "page", "rocksample","smka0b", "square"]
     names = ["page", "rocksample", "coins", "camera"]
     typ = "png"
     for name in names:
         k = 2
         image_path = f"Images_Data/{name}.{typ}"
         img_data = cv2.imread(image_path, 0) 
-        # seg_kmean = lloyd(img_data,k)
+
         seg_otsu = otsu(img_data)
-        # seg_kmean_dn = denoise(seg_kmean,8,3)
+
         seg_otsu_dn8 = denoise(seg_otsu,8,3)
         seg_otsu_dn4 = denoise(seg_otsu,4,3)
 
@@ -25,8 +24,6 @@ if __name__ == "__main__":
         seg_lloyd_dn5 = denoise(seg_lloyd5, 4, 3)
 
 
-        # cv2.imwrite(f"results/{name}_lloyd_k{k}.{typ}", seg_kmean)
-        # cv2.imwrite(f"results/{name}_lloyd_k{k}_dn.{typ}", seg_kmean_dn)
         cv2.imwrite(f"results/{name}_otsu.{typ}", seg_otsu)
         cv2.imwrite(f"results/{name}_otsu_dn8.{typ}", seg_otsu_dn8)
         cv2.imwrite(f"results/{name}_otsu_dn4.{typ}", seg_otsu_dn4)
